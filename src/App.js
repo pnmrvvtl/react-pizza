@@ -1,40 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
 import './scss/app.scss'
 import Header from "./components/header";
-import Categories from "./components/categories";
-import Sort from "./components/sort";
-import PizzaBlock from "./components/pizza-block";
+import React from "react";
+import {Route, Routes} from "react-router-dom";
+import Home from "./routes/home";
+import Cart from "./routes/cart";
+import NotFound from "./routes/not-found";
 
+
+//https://62b56ca842c6473c4b320ab2.mockapi.io/items
 function App() {
-    return (
-        <div className="content">
-            <div className="wrapper">
-                <Header/>
-                <div className="container">
-                    <div className="content__top">
-                        <Categories/>
-                        <Sort/>
-                    </div>
-                    <h2 className="content__title">Все пиццы</h2>
-                    <div className="content__items">
-                        <PizzaBlock price="500" title="Фирменная"/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
-                        <PizzaBlock/>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    return (
+
+        <Routes>
+            <Route path='/' element={<Header/>}>
+                <Route index element={<Home/>}/>
+                <Route path='/cart' element={<Cart/>}/>
+                <Route path='*' element={<NotFound/>}/>
+            </Route>
+        </Routes>
+
     );
 }
 
