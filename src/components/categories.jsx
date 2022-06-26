@@ -1,18 +1,13 @@
 import React from 'react';
 
-const Categories = () => {
-    const [active, setActive] = React.useState(0);
+const Categories = ({value, onClickCategory}) => {
     const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
-    const onClickHandler = (item) => {
-        setActive(item)
-    }
-
 
     return (
         <div className="categories">
             <ul>
                 {categories.map((item, index) => (
-                    <li key={index} onClick={() => onClickHandler(index)} className={active === index ? 'active' : ''}>{item}</li>))}
+                    <li key={index} onClick={() => onClickCategory(index)} className={value === index ? 'active' : ''}>{item}</li>))}
             </ul>
         </div>
     );

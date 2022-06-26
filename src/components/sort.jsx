@@ -1,15 +1,9 @@
 import React from 'react';
 
-const Sort = () => {
+const Sort = ({value, onClickSort}) => {
     const [isPopupVisible, setPopupVisible] = React.useState(false);
-    const [activeSort, setActiveSort] = React.useState(0);
 
     const sortArr = ['популярности', 'цене', 'алфавиту']
-
-    const onClickPopup = (index) => {
-        setActiveSort(index);
-        setPopupVisible(false);
-    }
 
     return (
         <div className="sort">
@@ -27,13 +21,13 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setPopupVisible(!isPopupVisible)}>{sortArr[activeSort]}</span>
+                <span onClick={() => setPopupVisible(!isPopupVisible)}>{sortArr[value]}</span>
             </div>
             {isPopupVisible && (
                 <div className="sort__popup">
                 <ul>
                     {sortArr.map((elem, index) => <li className={
-                        activeSort === index? 'active' : ''} onClick={() => onClickPopup(index)}>{elem}</li>)}
+                        value === index? 'active' : ''} onClick={() => {onClickSort(index); setPopupVisible(false)}}>{elem}</li>)}
                 </ul>
             </div>)}
         </div>
