@@ -1,8 +1,10 @@
 import React from 'react';
-
-const Sort = ({value, onClickSort}) => {
+import {useDispatch, useSelector} from "react-redux";
+import {setSortId} from "../redux/slices/filterSlice";
+const Sort = () => {
     const [isPopupVisible, setPopupVisible] = React.useState(false);
-
+    const sortId = useSelector((state) => state.filterSlice.sortId);
+    const dispatch = useDispatch();
     const sortArr = ['популярности', 'цене', 'алфавиту']
 
     return (
@@ -21,13 +23,13 @@ const Sort = ({value, onClickSort}) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setPopupVisible(!isPopupVisible)}>{sortArr[value]}</span>
+                <span onClick={() => setPopupVisible(!isPopupVisible)}>{sortArr[sortId]}</span>
             </div>
             {isPopupVisible && (
                 <div className="sort__popup">
                 <ul>
                     {sortArr.map((elem, index) => <li className={
-                        value === index? 'active' : ''} onClick={() => {onClickSort(index); setPopupVisible(false)}}>{elem}</li>)}
+                        sortId === index? 'active' : ''} onClick={() => {dispatch(setSortId(index)); setPopupVisible(false)}}>{elem}</li>)}
                 </ul>
             </div>)}
         </div>
