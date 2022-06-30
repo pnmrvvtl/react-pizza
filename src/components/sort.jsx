@@ -1,14 +1,30 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setSortId} from "../redux/slices/filterSlice";
+
 const Sort = () => {
     const [isPopupVisible, setPopupVisible] = React.useState(false);
     const sortId = useSelector((state) => state.filterSlice.sortId);
     const dispatch = useDispatch();
-    const sortArr = ['популярности', 'цене', 'алфавиту']
+    const sortArr = ['популярности', 'цене', 'алфавиту'];
+    const sortRef = React.useRef();
+
+    React.useEffect(() => {
+        const handleClickOutside = event => {
+            if (!event.path.includes(sortRef.current)) {
+                setPopupVisible(false);
+            }
+        };
+
+        document.body.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.body.removeEventListener('click', handleClickOutside);
+        }
+    }, [])
 
     return (
-        <div className="sort">
+        <div ref={sortRef} className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
@@ -27,11 +43,14 @@ const Sort = () => {
             </div>
             {isPopupVisible && (
                 <div className="sort__popup">
-                <ul>
-                    {sortArr.map((elem, index) => <li className={
-                        sortId === index? 'active' : ''} onClick={() => {dispatch(setSortId(index)); setPopupVisible(false)}}>{elem}</li>)}
-                </ul>
-            </div>)}
+                    <ul>
+                        {sortArr.map((elem, index) => <li className={
+                            sortId === index ? 'active' : ''} onClick={() => {
+                            dispatch(setSortId(index));
+                            setPopupVisible(false)
+                        }}>{elem}</li>)}
+                    </ul>
+                </div>)}
         </div>
     );
 };
